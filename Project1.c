@@ -38,7 +38,7 @@ void select(int productID, int quantity, float* balance, float* totalCost) {
     }
 
     float cost = products[n].price * quantity;
-    if (*totalCost + cost > *balance) {
+    if ( cost > *balance) {
         printf("Insufficient balance. Please insert more money.\n");
         return;
     }
