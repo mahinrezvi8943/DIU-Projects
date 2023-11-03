@@ -1,6 +1,5 @@
-#include <stdio.h>
-#include <string.h>
-
+#include <iostream>
+using namespace std;
 struct Product {
     int id;
     char name[50];
@@ -17,15 +16,22 @@ struct Product products[] = {
     {6, "Ice Cream", 50, 15}
 };
 
-void menu() {
-    printf("\n\n====== Vending Machine Menu ======\n\n");
-    printf("%-3s %-15s %-10s   %-20s\n", "ID", "Product Name", "Price (Tk.)",   "Quantity Available");
-    for (int i = 0; i < sizeof(products) / sizeof(products[0]); i++) {
-        printf("%-3d %-15s %-10.2f     %-20d\n", products[i].id, products[i].name, products[i].price, products[i].quantity);
+void menu()
+{
+    cout<<"\n           ,,,,,,,,,,,,,,,,,,,,,,,,,,        "<<endl;
+    cout<<"           | Welcome to vending app |    \n";
+    cout<<"           ``````````````````````````        \n";
+    cout<<"................................................\n";
+    printf("| %-6s %-15s %-12s %-2s |\n","ID", "Name", "Price", "Quantity");
+    
+    cout<<"|``````````````````````````````````````````````|\n";
+    for(int i = 0; i < 6; i++)
+    {
+        printf("|  %-5d %-15s %-12d %-2d      |\n", products[i].id, products[i].name, products[i].price, products[i].quantity);
     }
-    printf("\n");
+    cout<<"|,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,|\n";
+    cout<<"\n";
 }
-
 void select(int productID, int quantity, float* balance, float* totalCost) {
     if (productID < 1 || productID > 6) {
         printf("Invalid selection. Please enter a valid product ID.\n");
@@ -97,5 +103,6 @@ int main() {
         printf("                            Total cost: $%.2f\n", totalCost);
     } else printf("Your cart is empty.\n\n");
     printf("\nThank you for using the Vending Machine! Your remaining balance is: $%.2f\n\n\n", balance);
+
     return 0;
 }
