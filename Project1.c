@@ -26,7 +26,7 @@ void menu() {
     printf("\n");
 }
 
-void select(int productID, int quantity, float* balance) {
+void select(int productID, int quantity, float* balance, float* totalCost) {
     if (productID < 1 || productID > 6) {
         printf("Invalid selection. Please enter a valid product ID.\n");
         return;
@@ -36,20 +36,28 @@ void select(int productID, int quantity, float* balance) {
         printf("Sorry, we don't have enough quantity of %s. Please choose a smaller quantity.\n", products[n].name);
         return;
     }
+
+    float cost = products[n].price * quantity;
+    if (*totalCost + cost > *balance) {
+        printf("Insufficient balance. Please insert more money.\n");
+        return;
+    }
+
     if (products[n].quantity > 0) {
-        if (*balance >= products[n].price * quantity) {
-            printf("Enjoy your %d %s!\n", quantity, products[n].name);
-            products[n].quantity -= quantity;
-            *balance -= products[n].price * quantity;
-        } else printf("Insufficient balance. Please insert more money.\n");
-    } else printf("Sorry, %s is out of stock. Please choose another product.\n", products[n].name);
+        printf("Enjoy your %d %s!\n", quantity, products[n].name);
+        products[n].quantity -= quantity;
+        *balance -= cost;
+        *totalCost += cost;
+    } else {
+        printf("Sorry, %s is out of stock. Please choose another product.\n", products[n].name);
+    }
 }
 
 int main() {
     float balance = 100.0, totalCost = 0;
     int productID, quantity, productCount = 0;
     int Quantity[6];
-    for(int i = 0; i <6; i++) Quantity[i] = products[i].quantity;
+    for (int i = 0; i < 6; i++) Quantity[i] = products[i].quantity;
     printf("Welcome to the Vending Machine!\n");
 
     while (1) {
@@ -62,11 +70,16 @@ int main() {
         printf("Enter the quantity you want to purchase: ");
         scanf("%d", &quantity);
 
-        select(productID, quantity, &balance);
+        select(productID, quantity, &balance, &totalCost);
 
         int n = productID - 1;
-        totalCost += products[n].price * quantity;
-        productCount++;
+
+        if (products[n].quantity < Quantity[n]) {
+            int purchasedQuantity = Quantity[n] - products[n].quantity;
+            float productTotalCost = purchasedQuantity * products[n].price;
+            printf("Added to Shopping Cart: %-2d %s for $%.2f\n", purchasedQuantity, products[n].name, productTotalCost);
+            productCount++;
+        }
     }
 
     printf("\n\n\n\n        ............ Shopping Cart ............\n\n");
@@ -81,8 +94,8 @@ int main() {
             printf("|  %-4d %-20s %-12.2f %-12.2f |\n", quantity, products[i].name, products[i].price, productTotalCost);
         }
         printf("|,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,|\n");
-        printf("                            Total cost: %-8.2f\n", totalCost);
+        printf("                            Total cost: $%.2f\n", totalCost);
     } else printf("Your cart is empty.\n\n");
-    printf("\nThank you for using the Vending Machine! Your remaining balance is: %-8.2f\n\n\n", balance);
+    printf("\nThank you for using the Vending Machine! Your remaining balance is: $%.2f\n\n\n", balance);
     return 0;
 }
