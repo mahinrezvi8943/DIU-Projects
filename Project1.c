@@ -1,5 +1,4 @@
-#include <iostream>
-using namespace std;
+#include <stdio.h>
 struct Product {
     int id;
     char name[50];
@@ -18,19 +17,19 @@ struct Product products[] = {
 
 void menu()
 {
-    cout<<"\n           ,,,,,,,,,,,,,,,,,,,,,,,,,,        "<<endl;
-    cout<<"           | Welcome to vending app |    \n";
-    cout<<"           ``````````````````````````        \n";
-    cout<<"................................................\n";
+    printf("\n           ,,,,,,,,,,,,,,,,,,,,,,,,,,        \n");
+    printf("           | Welcome to vending app |    \n");
+    printf("           ``````````````````````````        \n");
+    printf("................................................\n");
     printf("| %-6s %-15s %-12s %-2s |\n","ID", "Name", "Price", "Quantity");
     
-    cout<<"|``````````````````````````````````````````````|\n";
+    printf("|``````````````````````````````````````````````|\n");
     for(int i = 0; i < 6; i++)
     {
         printf("|  %-5d %-15s %-12d %-2d      |\n", products[i].id, products[i].name, products[i].price, products[i].quantity);
     }
-    cout<<"|,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,|\n";
-    cout<<"\n";
+    printf("|,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,|\n");
+    printf("\n");
 }
 void select(int productID, int quantity, float* balance, float* totalCost) {
     if (productID < 1 || productID > 6) {
