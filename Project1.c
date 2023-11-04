@@ -1,4 +1,7 @@
 #include <stdio.h>
+#include<stdlib.h>
+#include<string>
+
 struct Product {
     int id;
     char name[50];
@@ -17,18 +20,18 @@ struct Product products[] = {
 
 void menu()
 {
-    printf("\n           ,,,,,,,,,,,,,,,,,,,,,,,,,,        \n");
-    printf("           | Welcome to vending app |    \n");
-    printf("           ``````````````````````````        \n");
-    printf("................................................\n");
-    printf("| %-6s %-15s %-12s %-2s |\n","ID", "Name", "Price", "Quantity");
+    printf("\n           ╻━━━━━━━━━━━━━━━━━━━━━━━━╻        \n");
+    printf("           ┃ Welcome to vending app ┃    \n");
+    printf("           ╹━━━━━━━━━━━━━━━━━━━━━━━━╹        \n");
+    printf("╻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╻\n");
+    printf("┃ %-6s %-15s %-12s %-2s ┃\n","ID", "Name", "Price", "Quantity");
     
-    printf("|``````````````````````````````````````````````|\n");
+    printf("┃━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┃\n");
     for(int i = 0; i < 6; i++)
     {
-        printf("|  %-5d %-15s %-12d %-2d      |\n", products[i].id, products[i].name, products[i].price, products[i].quantity);
+        printf("┃  %-5d %-15s %-12d %-2d      ┃\n", products[i].id, products[i].name, products[i].price, products[i].quantity);
     }
-    printf("|,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,|\n");
+    printf("┃▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁┃\n");
     printf("\n");
 }
 void select(int productID, int quantity, float* balance, float* totalCost) {
@@ -63,11 +66,10 @@ int main() {
     int productID, quantity, productCount = 0;
     int Quantity[6];
     for (int i = 0; i < 6; i++) Quantity[i] = products[i].quantity;
-    printf("Welcome to the Vending Machine!\n");
 
     while (1) {
-        printf("Current Balance: $%.2f\n", balance);
         menu();
+        printf("Current Balance: $%.2f\n", balance);
         printf("Enter the product ID or 0 to exit: ");
         scanf("%d", &productID);
 
@@ -82,23 +84,25 @@ int main() {
         if (products[n].quantity < Quantity[n]) {
             int purchasedQuantity = Quantity[n] - products[n].quantity;
             float productTotalCost = purchasedQuantity * products[n].price;
-            printf("Added to Shopping Cart: %-2d %s for $%.2f\n", purchasedQuantity, products[n].name, productTotalCost);
+            printf("Added to Shopping Cart: %-2d %s for %.2fTk\n", purchasedQuantity, products[n].name, productTotalCost);
             productCount++;
         }
     }
+    printf("\n\n\n\n                    ╻━━━━━━━━━━━━━━━╻\n");
+    printf("        ............┃ Shopping Cart ┃............\n");
 
-    printf("\n\n\n\n        ............ Shopping Cart ............\n\n");
+    printf("                    ╹━━━━━━━━━━━━━━━╹\n\n");
 
     if (productCount > 0) {
-        printf(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,\n");
-        printf("| %-5s %-20s %-12s %-12s |\n", "Qty", "Product", "Price(Tk.)", "Total");
-        printf("|``````````````````````````````````````````````````````|\n");
+        printf("╻━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╻\n");
+        printf("┃ %-5s %-20s %-12s %-12s ┃\n", "Qty", "Product", "Price(Tk.)", "Total");
+        printf("┃━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┃\n");
         for (int i = 0; i < 6; i++) {
             int quantity = Quantity[i] - products[i].quantity;
             float productTotalCost = quantity * products[i].price;
-            printf("|  %-4d %-20s %-12.2f %-12.2f |\n", quantity, products[i].name, products[i].price, productTotalCost);
+            printf("┃  %-4d %-20s %-12.2f %-12.2f ┃\n", quantity, products[i].name, products[i].price, productTotalCost);
         }
-        printf("|,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,|\n");
+        printf("╹━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╹\n");
         printf("                            Total cost: $%.2f\n", totalCost);
     } else printf("Your cart is empty.\n\n");
     printf("\nThank you for using the Vending Machine! Your remaining balance is: $%.2f\n\n\n", balance);
